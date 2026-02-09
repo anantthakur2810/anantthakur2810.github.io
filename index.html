@@ -112,7 +112,6 @@
           <h3>My Events</h3>
           <div>
             <button id="clear">Clear All Events</button>
-            <button id="sample">Add Sample Events</button>
           </div>
         </div>
 
@@ -123,6 +122,54 @@
     </div>
 
   </div>
+  
+  <script>
+    const form = document.getElementById("eventForm");
+    const eventsDiv = document.getElementById("events");
+    const clearBtn = document.getElementById("clear");
+    const sampleBtn = document.getElementById("sample");
+
+    function addEvent(title, date, category, desc) {
+      const div = document.createElement("div");
+      div.className = "event";
+      div.innerHTML = `
+        <h4>${title}</h4>
+        <p>${date} | ${category}</p>
+        <p>${desc}</p>
+        <button class="delete">Delete</button>
+      `;
+      eventsDiv.appendChild(div);
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      eventsDiv.innerHTML = "";
+      addEvent(
+        title.value,
+        date.value,
+        category.value,
+        desc.value
+      );
+      form.reset();
+    });
+
+    eventsDiv.addEventListener("click", e => {
+      if (e.target.classList.contains("delete")) {
+        e.target.parentElement.remove();
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      eventsDiv.innerHTML = `<p class="empty">No events yet. Add your first event!</p>`;
+    });
+
+    sampleBtn.addEventListener("click", () => {
+      eventsDiv.innerHTML = "";
+      addEvent("Tech Conference", "2026-02-10", "Conference", "Main Hall");
+      addEvent("JS Workshop", "2026-02-12", "Workshop", "Lab 3");
+    });
+
+  </script>
 
 </body>
 </ht
