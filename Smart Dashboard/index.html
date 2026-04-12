@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Event Dashboard</title>
+
+  <style>
+    body {
+     margin: 0;
+     font-family: Arial;
+     background: linear-gradient(120deg, #8ec5fc, #e0c3fc);
+    }
+
+    .app {
+     max-width: 1000px;
+     margin: auto;
+     padding: 20px;
+    }
+
+    h1 {
+     text-align: center;
+     color: white;
+    }
+
+    .grid {
+     display: grid;
+     grid-template-columns: 1fr 2fr;
+     gap: 20px;
+    }
+
+    .card {
+     background: white;
+     border-radius: 10px;
+     padding: 15px;  
+    } 
+
+    .form-card label {
+     font-size: 13px;
+     display: block;
+    margin-top: 10px;
+    }
+
+    input, select, textarea {
+     width: 100%;
+    padding: 7px;
+    margin-top: 5px;
+    }
+
+    button {
+     background: #6c63ff;
+     color: white;
+     border: none;
+     padding: 8px;
+     margin-top: 12px;
+     width: 100%;
+     border-radius: 5px;
+     cursor: pointer;
+    }
+
+    .events-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+    }
+
+     .events-header button {
+     width: auto;
+     margin-left: 5px;
+     padding: 6px 10px;
+    }
+
+    .event {
+     background: #f4f6f8;
+     padding: 10px;
+     margin-top: 10px;
+     border-left: 4px solid #6c63ff;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="app">
+    <h1>Smart Event Dashboard</h1>
+
+    <div class="grid">
+      <div class="card form-card">
+        <h3>Add New Event</h3>
+
+        <form id="eventForm">
+          <label>Event Title</label>
+          <input id="title" required>
+
+          <label>Event Date</label>
+          <input type="date" id="date" required>
+
+          <label>Category</label>
+          <select id="category">
+            <option>Conference</option>
+            <option>Workshop</option>
+            <option>Seminar</option>
+          </select>
+
+          <label>Description</label>
+          <textarea id="desc"></textarea>
+
+          <button type="submit">Add Event</button>
+        </form>
+      </div>
+      <div class="card events-card">
+        <div class="events-header">
+          <h3>My Events</h3>
+          <div>
+            <button id="clear">Clear All Events</button>
+          </div>
+        </div>
+
+        <div id="events" class="events">
+          <p class="empty">No events yet. Add your first event!</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <script>
+    const form = document.getElementById("eventForm");
+    const eventsDiv = document.getElementById("events");
+    const clearBtn = document.getElementById("clear");
+    const sampleBtn = document.getElementById("sample");
+
+    function addEvent(title, date, category, desc) {
+      const div = document.createElement("div");
+      div.className = "event";
+      div.innerHTML = `
+        <h4>${title}</h4>
+        <p>${date} | ${category}</p>
+        <p>${desc}</p>
+        <button class="delete">Delete</button>
+      `;
+      eventsDiv.appendChild(div);
+    }
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      eventsDiv.innerHTML = "";
+      addEvent(
+        title.value,
+        date.value,
+        category.value,
+        desc.value
+      );
+      form.reset();
+    });
+
+    eventsDiv.addEventListener("click", e => {
+      if (e.target.classList.contains("delete")) {
+        e.target.parentElement.remove();
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      eventsDiv.innerHTML = `<p class="empty">No events yet. Add your first event!</p>`;
+    });
+
+    sampleBtn.addEventListener("click", () => {
+      eventsDiv.innerHTML = "";
+      addEvent("Tech Conference", "2026-02-10", "Conference", "Main Hall");
+      addEvent("JS Workshop", "2026-02-12", "Workshop", "Lab 3");
+    });
+
+  </script>
+
+</body>
+</ht

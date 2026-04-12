@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,3 +13,31 @@
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+=======
+<h1>My Web Dev Projects</h1>
+
+<ul id="projects"></ul>
+
+<script>
+const repo = "anantthakur2810/anantthakur2810.github.io";
+
+fetch(`https://api.github.com/repos/${repo}/contents`)
+  .then(res => res.json())
+  .then(data => {
+    const list = document.getElementById("projects");
+
+    data.forEach(item => {
+      if(item.type === "dir"){
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+
+        link.href = `./${item.name}/`;
+        link.textContent = item.name;
+
+        li.appendChild(link);
+        list.appendChild(li);
+      }
+    });
+  });
+</script>
+>>>>>>> 274234c02c671592f4c5eef90d1594ea14c3d01d
